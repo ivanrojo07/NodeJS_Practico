@@ -10,6 +10,9 @@ app.use(express.urlencoded({
     extended : true
 })); // for parsing application/x-www-form-urlencoded
 routes(app);
+const swaggerUI = require('swagger-ui-express');
+const swaggerDoc = require('./swagger.json')
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDoc))
 
 const port = process.env.PORT || 8080;
 
