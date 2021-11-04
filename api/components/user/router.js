@@ -19,7 +19,12 @@ router.get('/:id',secure('get'), function(req, res) {
     console.log('router',req.params.id);
     controller.get(req.params.id)
         .then( (user) => {
-            response.success(req, res, user, 200);
+            if(user){
+                response.success(req, res, user, 200);
+            }
+            else{
+                response.error(req, res, "not found", 404,'User not found');
+            }
         })
         .catch( (error) => {
             response.error(req, res, error, 400, error);

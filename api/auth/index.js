@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const error = require('../utils/error');
 const SECRET = process.env.SECRET || "secreto";
 function sign(data) {
     return jwt.sign(data, SECRET);
@@ -8,7 +9,7 @@ const check = {
         const decoded = decodeHeader(req);
         console.log(decoded);
         if(decoded.id != ownerId) {
-            throw new Error('Unauthorized');
+            throw error('Unauthorized', 401);
         }
 
         //comprobar si es o no propio

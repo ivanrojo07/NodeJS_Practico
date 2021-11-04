@@ -2,6 +2,7 @@ require('dotenv').config()
 
 const express = require('express');
 const routes = require('./network/network');
+const errors = require('./network/errors');
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDoc))
 
 const port = process.env.PORT || 8080;
 
+app.use(errors)
 app.listen(port, () => {
     console.log(`App listening at http://localhost:${port}`);
 });
