@@ -15,7 +15,6 @@ module.exports = function(injectedStore) {
                 if(sonIguales === true) {
                     // generar token
                     token = auth.sign(data);
-                    console.log(token);
                     return token;
                 }
                 else{
@@ -23,7 +22,6 @@ module.exports = function(injectedStore) {
                 }
             })
             .catch((error)=>{
-                console.log(error);
                 throw new Error(error);
             });
     }

@@ -1,4 +1,5 @@
 const express = require('express');
+const secure = require('./secure');
 const response = require('../../network/response');
 const controller = require('./index');
 
@@ -14,7 +15,8 @@ router.get('/', function(req, res) {
         })
 });
 
-router.get('/:id', function(req, res) {
+router.get('/:id',secure('get'), function(req, res) {
+    console.log('router',req.params.id);
     controller.get(req.params.id)
         .then( (user) => {
             response.success(req, res, user, 200);
@@ -40,7 +42,7 @@ router.post('/', function (req, res) {
         });
 });
 
-router.delete('/:id', function(req, res) {
+router.delete('/:id',secure('delete'), function(req, res) {
     controller.remove(req.params.id)
         .then( (flag) => {
             response.success(req, res, flag, 200);
