@@ -4,7 +4,8 @@ const db = {
             id: 1,
             name: "Ivan"
         }
-    ]
+    ],
+    'auth': []
 };
 
 async function list(tabla){
@@ -18,6 +19,7 @@ async function get(tabla, id) {
 
 async function upset(tabla, data){
     db[tabla].push(data);
+    console.log(db);
     return data;
 }
 

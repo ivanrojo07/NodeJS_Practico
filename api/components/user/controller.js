@@ -1,5 +1,5 @@
+const auth = require('../auth');
 const TABLA = 'user';
-
 
 module.exports = function (injectedStore) {
     let store = injectedStore;
@@ -15,8 +15,18 @@ module.exports = function (injectedStore) {
         return store.get(TABLA,userId);
     }
 
-    function set(user) {
-        user.id = Date.now();
+    async function set(user) {
+        if(!user.id){
+            user.id = Date.now();
+        }
+        if(user.password || user.username) {
+            await auth.upset({
+                id: user.id,
+                usename: user.username,
+                password: user.password
+            });
+        }
+        
         return store.upset(TABLA, user);
     }
 

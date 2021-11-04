@@ -27,7 +27,9 @@ router.get('/:id', function(req, res) {
 router.post('/', function (req, res) {
     // console.log(req.body);
     let userParams = {
-        name: req.body.name
+        name: req.body.name,
+        username: req.body.username,
+        password: req.body.password,
     };
     controller.set(userParams)
         .then( (user) => {
