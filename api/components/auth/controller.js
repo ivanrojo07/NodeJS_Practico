@@ -1,9 +1,21 @@
+const auth = require('../../auth');
 const TABLA = "auth"
 
 module.exports = function(injectedStore) {
     let store = injectedStore;
     if(!store) {
         store = require('../../store/dummy');
+    }
+    async function login(username, password) {
+        const data = await store.query(TABLA, { username:username });
+        if(data.password === password) {
+            // generar token
+            console.log(data);
+            return auth.sign(data);
+        }
+        else{
+            throw new Error('Credenciales incorrectas')
+        }
     }
 
     function upset(data) {
@@ -22,6 +34,7 @@ module.exports = function(injectedStore) {
     }
 
     return {
-        upset
+        upset,
+        login
     }
 }
