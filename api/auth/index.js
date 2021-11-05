@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const error = require('../utils/error');
 const SECRET = process.env.SECRET || "secreto";
 function sign(data) {
-    return jwt.sign(data, SECRET);
+    return jwt.sign(JSON.parse(JSON.stringify(data)), SECRET);
 }
 const check = {
     own: function (req, ownerId) {
@@ -13,6 +13,10 @@ const check = {
         }
 
         //comprobar si es o no propio
+    },
+    logged: function (req) {
+        const decoded = decodeHeader(req)
+        if(!decoded) throw error('Invalid Token', 401);
     }
 }
 

@@ -5,7 +5,7 @@ const TABLA = "auth"
 module.exports = function(injectedStore) {
     let store = injectedStore;
     if(!store) {
-        store = require('../../store/dummy');
+        store = require('../../store/mysql');
     }
     async function login(username, password) {
         const data = await store.query(TABLA, { username:username });
@@ -27,9 +27,7 @@ module.exports = function(injectedStore) {
     }
 
     async function upset(data) {
-        const authData = {
-            id: data.id,
-        }
+        const authData = {}
 
         if(data.username) {
             authData.username = data.username;

@@ -1,5 +1,5 @@
 const auth = require('../auth');
-const TABLA = 'users';
+const TABLA = 'posts';
 
 module.exports = function (injectedStore) {
     let store = injectedStore;
@@ -9,20 +9,6 @@ module.exports = function (injectedStore) {
     
     function list(){
         return store.list(TABLA);
-    }
-
-    function follow (user_id_from, user_id_to) {
-        return store.upset('user_follows',{
-            user_from: user_id_from,
-            user_to: user_id_to
-        });
-    }
-
-    async function following (user_id) {
-        const join = {};
-        join[TABLA] = 'user_to'; // { users: 'user_to' }
-        const query = { user_from: user_id}
-        return await store.query("user_follows", query, join);
     }
 
     function get(userId) {
@@ -58,8 +44,6 @@ module.exports = function (injectedStore) {
         list,
         get,
         set,
-        remove,
-        follow,
-        following
+        remove
     }
 }
