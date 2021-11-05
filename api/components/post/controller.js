@@ -11,39 +11,43 @@ module.exports = function (injectedStore) {
         return store.list(TABLA);
     }
 
-    function get(userId) {
-        return store.get(TABLA,userId);
+    function get(postId) {
+        return store.get(TABLA,postId);
+    }
+    
+    function getUserPost(userId){
+        const join = {};
+        join['users'] = 'user_id'; // { users: 'user_id' }
+        const query = { user_id: userId}
+        return store.query(TABLA, query, join);
     }
 
-    async function set(user) {
-        if(user.password || user.username) {
-            await auth.upset({
-                username: user.username,
-                password: user.password
-            });
-        }
+    async function set(post) {
         const data = {}
-        if(user.id){
-            data.id = user.id
+        if(post.id){
+            data.id = post.id
         }
-        if(user.name){
-            data.name = user.name
+        if(post.post){
+            data.post = post.post
         }
-        if(user.username){
-            data.username = user.username
+        if(post.text){
+            data.text = post.text
         }
-        
+        if(post.user_id) {
+            data.user_id = post.user_id
+        }
         return store.upset(TABLA, data);
     }
 
-    function remove(userId) {
-        return store.remove(TABLA, userId);
+    function remove(postId) {
+        return store.remove(TABLA, postId);
     }
 
     return {
         list,
         get,
         set,
-        remove
+        remove,
+        getUserPost
     }
 }

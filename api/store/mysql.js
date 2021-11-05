@@ -89,7 +89,17 @@ function query (table, query, join) {
         connection.query(`SELECT * FROM ${table} ${joinQuery} WHERE ${table}.?;`, query, (err, result) => {
             console.log("query",{err, result})
             err && reject(err);
-            resolve(result[0] || null);
+            resolve(result || null);
+        })
+    })
+}
+
+function remove(table, id) {
+    return new Promise( (resolve, reject) => {
+        connection.query(`DELETE FROM ${table} WHERE id=?`,id, (err, result) => {
+            console.log('query', {err, result});
+            err && reject(err);
+            resolve(result);
         })
     })
 }
@@ -99,5 +109,6 @@ module.exports = {
     list,
     get,
     upset,
-    query
+    query,
+    remove
 }
